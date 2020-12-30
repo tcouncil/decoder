@@ -189,8 +189,6 @@ function substitution(input, alphabet, encode = true) {
             }
         }
     }
-    console.log(`Our return string is: '${returnString}'`);
     return returnString;
-
 }
 module.exports = substitution;
