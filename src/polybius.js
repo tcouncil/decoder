@@ -1,32 +1,29 @@
-const charPos = (char) => char.toLowerCase().charCodeAt(0); // Changes charactor to lowercase and converts it into it's key code 
+const letterPos = (char) => char.toLowerCase().charCodeAt(0); // Changes charactor to lowercase and converts it into it's key code 
 
-const letterGetter = (char, shift = 0, alphabetLength = 0) => String.fromCharCode(charPos(char)); // Converts charactor to string based on it's key code 
+const letterGetter = (char) => String.fromCharCode(letterPos(char)); // Converts charactor to string based on it's key code 
 
 // Global Variable Declartions
 const LOWER_CHAR_CODE = 97;
 const HIGHER_CHAR_CODE = 122;
 const ALPHABET_LENGTH = 26;
+const SPACE_CHAR_CODE = 32;
 
 function encoder(letter){
-    const alphabetPos = charPos(letter) - HIGHER_CHAR_CODE + ALPHABET_LENGTH;
-    console.log(`Letter: ${letter}`);
-    console.log(`Encoder Alphabet Position: ${alphabetPos}`);
+    const alphabetPos = letterPos(letter) - HIGHER_CHAR_CODE + ALPHABET_LENGTH;
+    const rowPos = Math.ceil(alphabetPos/5);
+    const colPos = alphabetPos <= 5 ? alphabetPos : alphabetPos <= 8 ? (alphabetPos+1 % rowPos*5)-(rowPos*5) : (alphabetPos+1 % rowPos*5)-(rowPos*5)-1;
 
-    const encodedPos = Math.ceil(alphabetPos/5);
-    console.log(`Encoded Position: ${encodedPos}`);
-
-    const polyPos = alphabetPos <= 5 ? alphabetPos : alphabetPos <= 8 ? (alphabetPos+1 % encodedPos*5)-(encodedPos*5) : (alphabetPos+1 % encodedPos*5)-(encodedPos*5)-1;
-
-   
-    if(encodedPos === 2 && alphabetPos > 8){
-        console.log(`Polybius Position: ${polyPos+1}`);
-        return `${polyPos+1}${encodedPos}`;
+   // Modifier for I/J sharing a space
+    if(rowPos === 2){
+        switch(alphabetPos){
+            case 9:  // Special case for I
+            case 10: // Special case for J
+                return `${4}${rowPos}`;
+        }
     }
-
-    console.log(`Polybius Position: ${polyPos!== 0 ? polyPos : 5}`);
-    //if(alphabetPos === )
-    return `${polyPos!== 0 ? polyPos : 5}${encodedPos}`;
+    return `${colPos!== 0 ? colPos : 5}${colPos!== 0 ? rowPos : (rowPos-1)}`;
 }
+
 
 function polybius(input, encode = true) {
     if (!encode) {
@@ -35,99 +32,12 @@ function polybius(input, encode = true) {
             return false;
     }
 
-    returnString = '';
+    let returnString = '';
     if (encode) {
         for (const char of input) { // Converts our letters into numbers
-            console.log(charPos(char))
-            if (charPos(char) > LOWER_CHAR_CODE) { 
-                returnString += encoder(letterGetter(char));
+            if (letterPos(char) > LOWER_CHAR_CODE && letterPos(char) < HIGHER_CHAR_CODE || letterPos(char) === SPACE_CHAR_CODE) { 
+                letterPos(char) === SPACE_CHAR_CODE ? returnString += ' ' : returnString += encoder(letterGetter(char));
             }
-            console.log(`String: ${returnString}`);
-
-         /*
-            switch (char.toLowerCase()) {
-                case 'a':
-                    returnString += 11;
-                    break;
-                case 'b':
-                    returnString += 21;
-                    break;
-                case 'c':
-                    returnString += 31;
-                    break;
-                case 'd':
-                    returnString += 41;
-                    break;
-                case 'e':
-                    returnString += 51;
-                    break;
-                case 'f':
-                    returnString += 12;
-                    break;
-                case 'g':
-                    returnString += 22;
-                    break;
-                case 'h':
-                    returnString += 32;
-                    break;
-                case 'i':
-                case 'j':
-                    returnString += 42;
-                    break;
-                case 'k':
-                    returnString += 52;
-                    break;
-                case 'l':
-                    returnString += 13;
-                    break;
-                case 'm':
-                    returnString += 23;
-                    break;
-                case 'n':
-                    returnString += 33;
-                    break;
-                case 'o':
-                    returnString += 43;
-                    break;
-                case 'p':
-                    returnString += 53;
-                    break;
-                case 'q':
-                    returnString += 14;
-                    break;
-                case 'r':
-                    returnString += 24;
-                    break;
-                case 's':
-                    returnString += 34;
-                    break;
-                case 't':
-                    returnString += 44;
-                    break;
-                case 'u':
-                    returnString += 54;
-                    break;
-                case 'v':
-                    returnString += 15;
-                    break;
-                case 'w':
-                    returnString += 25;
-                    break;
-                case 'x':
-                    returnString += 35;
-                    break;
-                case 'y':
-                    returnString += 45;
-                    break;
-                case 'z':
-                    returnString += 55;
-                    break;
-                case ' ':
-                    returnString += ' ';
-                    break;
-            }
-            */
-           
         }
     } else {
         const numArray = [...input]; // Spread our input into an array of numbers
@@ -217,7 +127,6 @@ function polybius(input, encode = true) {
                     break;
             }
         }
-
     }
     return returnString;
 }
