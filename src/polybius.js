@@ -11,9 +11,21 @@ function encoder(letter){
     const alphabetPos = charPos(letter) - HIGHER_CHAR_CODE + ALPHABET_LENGTH;
     console.log(`Letter: ${letter}`);
     console.log(`Encoder Alphabet Position: ${alphabetPos}`);
-    
-    if(alphabetPos === )
-    return alphabetPos;
+
+    const encodedPos = Math.ceil(alphabetPos/5);
+    console.log(`Encoded Position: ${encodedPos}`);
+
+    const polyPos = alphabetPos <= 5 ? alphabetPos : alphabetPos <= 8 ? (alphabetPos+1 % encodedPos*5)-(encodedPos*5) : (alphabetPos+1 % encodedPos*5)-(encodedPos*5)-1;
+
+   
+    if(encodedPos === 2 && alphabetPos > 8){
+        console.log(`Polybius Position: ${polyPos+1}`);
+        return `${polyPos+1}${encodedPos}`;
+    }
+
+    console.log(`Polybius Position: ${polyPos!== 0 ? polyPos : 5}`);
+    //if(alphabetPos === )
+    return `${polyPos!== 0 ? polyPos : 5}${encodedPos}`;
 }
 
 function polybius(input, encode = true) {
