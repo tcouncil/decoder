@@ -1,7 +1,3 @@
-// input refers to the inputted text to be encoded or decoded.
-// shift refers to how much each letter is "shifted" by
-// encode refers to whether you should encode or decode the message.
-
 // Global Variable Declartions
 const SPECIAL_CHAR_RANGE = 65;
 const LOWER_CHAR_CODE = 97;
@@ -14,6 +10,9 @@ const letterShift = (char, shift = 0, alphabetLength = 0) => String.fromCharCode
 
 const shiftCriteria = (shift) => !shift || shift === 0 || shift < -25 || shift > 25;// Checks to see if shift meets the correct criteria
 
+// input refers to the inputted text to be encoded or decoded.
+// shift refers to how much each letter is "shifted" by
+// encode refers to whether you should encode or decode the message.
 function caesar(input, shift, encode = true) {
     if (shiftCriteria(shift)) { // Check's to see if we can run the full function
         return false;
@@ -21,7 +20,6 @@ function caesar(input, shift, encode = true) {
 
     !encode ? shift *= -1 : shift *= 1  // Intialize shift's positive/negative effects
 
-    
     let returnString = '';
 
     for (const char of input) {
