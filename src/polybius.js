@@ -58,11 +58,14 @@ function polybius(input, encode = true) {
         const numArray = [...input]; // Spread our input into an array of numbers
         const numArrayLength = ((input.length - numArray.filter(element => element === ' ').length) / 2); // Set our loop length to the amount of number pairs minus space length divided by 2
         for (let i = 0; i < numArrayLength; i++) { // For each column/row pair and space
-            if (numArray[0] === ' ') { // If the next element it our array is a space, add the space to our string and remove it
+            if(numArray[0] === ' ') { // If the next element it our array is a space, add the space to our string and remove it
                 returnString += ' ';
                 numArray.shift(); // Removes our space
             }
             const colPos = numArray.shift(); // Shift the first index to be our column position
+            while(numArray[0] === ' '){
+                numArray.shift(); // Removes extra spaces between numbers if there are any
+            }
             const rowPos = numArray.shift(); // Shift the next index to be our row position
             returnString += decoder(Number(colPos),Number(rowPos)); // Add the decoded character to our return string
         }

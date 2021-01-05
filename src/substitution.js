@@ -1,5 +1,4 @@
 const alphabetCode = (char) => (char.toLowerCase().charCodeAt(0)) - HIGHER_LETTER + ALPH_LENGTH; // Converts charactor to lowercase & converts it into a Javascript Character Code.
-const getCharacter = (code) => String.fromCharCode(code + LOWER_LETTER);
 
 // Global Variable Declartions
 const HIGHER_LETTER = 'z'.charCodeAt(0);
@@ -20,12 +19,12 @@ function substitution(input, alphabet, encode = true) {
             }
         }
     }
-
     let returnString = '';
     const inArray = [...input]; // Spread our input into an array
     if (encode) {
         for (let i = 0; i < input.length; i++) { // Encode our input
-            alphabetCode(inArray[i]) === SPACE ? returnString += ' ' : returnString += alphabet[alphabetCode(inArray[i]) - 1];
+            if(input[i].toLowerCase().charCodeAt(0) >= LOWER_LETTER && input[i].toLowerCase().charCodeAt(0) <= HIGHER_LETTER || input[i].charCodeAt(0) === ' '.charCodeAt(0) )
+                alphabetCode(inArray[i]) === SPACE ? returnString += ' ' : returnString += alphabet[alphabetCode(inArray[i]) - 1];
         }
     } else {
         const alphabetArray = [...alphabet]
