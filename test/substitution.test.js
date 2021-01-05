@@ -2,22 +2,33 @@ const expect = require("chai").expect;
 const substitution = require("../src/substitution");
 
 describe("substitution", () => {
-    it("Only spaces and letters will be included.", () => {
-        expect(substitution("t!hi!@#nk!ful?", "xoyqmcgrukswaflnthdjpzibev")).to.equal('jrufscpw');
+    it("Should only include spaces and letters.", () => {
+        const expected = 'jrufscpw';
+        const actual = substitution("t!hi!@#nk!ful?", "xoyqmcgrukswaflnthdjpzibev");
+        expect(actual).to.eql(expected);
     });
-    it("Spaces should be maintained throughout.", () => {
-        expect(substitution('You are an excellent spy', 'xoyqmcgrukswaflnthdjpzibev')).to.equal('elp xhm xf mbymwwmfj dne');
+    it("Should maintain spaces should be maintained throughout.", () => {
+        const expected = 'elp xhm xf mbymwwmfj dne';
+        const actual = substitution('You are an excellent spy', 'xoyqmcgrukswaflnthdjpzibev');
+        expect(actual).to.eql(expected);
     });
     
-    it("Decoder actually decodes", () => {
-        expect(substitution("jrufscpw", "xoyqmcgrukswaflnthdjpzibev", false)).to.equal('thinkful');
+    it("Should actually decode", () => {
+        const expected = 'thinkful';
+        const actual = substitution("jrufscpw", "xoyqmcgrukswaflnthdjpzibev", false);
+        expect(actual).to.eql(expected);
     });
 
-    it("The alphabet parameter must be string of exactly 26 characters. Otherwise, it should return false.", () => {
-        expect(substitution('thinkful', 'short')).to.be.false;
+    it("Should return false if alphabet parameter must be string of exactly 26 characters.", () => {
+        const actual = substitution('thinkful', 'short');
+        expect(actual).to.be.false;
     });
-    it("All of the characters in the alphabet parameter must be unique. Otherwise, it should return false", () => {
-        expect(substitution('thinkful', 'abcabcabcabcabcabcabcabcyz')).to.be.false;
-        expect(substitution('thinkful', 'azaasdqwerqweasdqqweasdqwe')).to.be.false;
+    it("Should return false if all of the characters in the alphabet parameter are not unique.", () => {
+        const actual = substitution('thinkful', 'abcabcabcabcabcabcabcabcyz');
+        expect(actual).to.be.false;
+    });
+    it(('Should return false if input or alphabet is missing'), () => {
+        const actual = substitution("", "");
+        expect(actual).to.be.false;
     });
 })

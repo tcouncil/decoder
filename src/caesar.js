@@ -7,9 +7,9 @@ const charPos = (char, shift = 0) => char.charCodeAt(0) + shift; // Converts cha
 
 const letterShift = (char, shift = 0, alphabetLength = 0) => String.fromCharCode(charPos(char, shift) + alphabetLength); // Converts charactor to string based on it's key code 
 
-const shiftCriteria = (shift) => !shift || shift === 0 || shift < -25 || shift > 25;// Checks to see if shift meets the correct criteria
+const argsCriteria = (input , shift) => !input || !shift || shift === 0 || shift < -25 || shift > 25;// Checks to see if shift meets the correct criteria
 function caesar(input, shift, encode = true) {
-    if (shiftCriteria(shift)) { // Check's to see if we can run the full function
+    if (argsCriteria(input, shift)) { // Check's to see if we can run the full function
         return false;
     }
     input = input.toLowerCase(); // Changes our entire input into lowercase

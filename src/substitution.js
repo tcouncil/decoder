@@ -10,8 +10,9 @@ const SPACE = alphabetCode(' ');
 // alphabet refers to substitution alphabet.
 // encode refers to whether you should encode or decode the message.
 function substitution(input, alphabet, encode = true) {
-    if (alphabet.length !== ALPH_LENGTH) { // Check it see if alphabet if actual length of the alphabet
+    if (alphabet.length !== ALPH_LENGTH || !input) { // Check it see if alphabet if actual length of the alphabet
         return false;
+
     } else { // Here we'll compare letters to see if we have any duplicates
         for (let letter in alphabet) {
             if (alphabet.slice(letter + 1).includes(alphabet[letter])) {

@@ -42,6 +42,9 @@ function decoder(column, row) {
 }
 
 function polybius(input, encode = true) {
+    if(input === '' || !input)
+        return false;
+        
     if (!encode) {
         const spaceArray = [...input];
         if ((input.length - spaceArray.filter(str => str === ' ').length) % 2 === 1) // Check if input length minus the space length is even or odd
