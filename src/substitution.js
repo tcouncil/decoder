@@ -28,7 +28,7 @@ function substitution(input, alphabet, encode = true) {
         }
     } else {
         const alphabetArray = [...alphabet]
-        for (let i = 0; i < input.length; i++) { // Decode out output by returning a letter based on 
+        for (let i = 0; i < input.length; i++) { // Decode out output by returning a letter based on index position
             let indexPosition = 0;
             for (let letter in alphabetArray) {
                 if (alphabetArray[letter] === inArray[i]){
