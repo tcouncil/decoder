@@ -3,7 +3,7 @@ const substitution = require("../src/substitution");
 
 describe("substitution", () => {
     it("Only spaces and letters will be included.", () => {
-        expect(substitution("thinkful", "xoyqmcgrukswaflnthdjpzibev")).to.equal('jrufscpw');
+        expect(substitution("t!hi!@#nk!ful?", "xoyqmcgrukswaflnthdjpzibev")).to.equal('jrufscpw');
     });
     it("Spaces should be maintained throughout.", () => {
         expect(substitution('You are an excellent spy', 'xoyqmcgrukswaflnthdjpzibev')).to.equal('elp xhm xf mbymwwmfj dne');
@@ -14,9 +14,10 @@ describe("substitution", () => {
     });
 
     it("The alphabet parameter must be string of exactly 26 characters. Otherwise, it should return false.", () => {
-        expect(substitution('thinkful', 'short')).to.equal(false);
+        expect(substitution('thinkful', 'short')).to.be.false;
     });
     it("All of the characters in the alphabet parameter must be unique. Otherwise, it should return false", () => {
-        expect(substitution('thinkful', 'abcabcabcabcabcabcabcabcyz')).to.equal(false);
+        expect(substitution('thinkful', 'abcabcabcabcabcabcabcabcyz')).to.be.false;
+        expect(substitution('thinkful', 'azaasdqwerqweasdqqweasdqwe')).to.be.false;
     });
 })
