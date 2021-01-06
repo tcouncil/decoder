@@ -1,16 +1,20 @@
 const alphabetCode = (char) => (char.toLowerCase().charCodeAt(0)) - 'z'.charCodeAt(0) + 26; // Converts charactor to lowercase & converts it into a Javascript Character Code.
 
 function substitution(input, alphabet, encode = true) {
-    if (alphabet.length !== 26 || !input) { // Check it see if alphabet if actual length of the alphabet
+    if (!alphabet || alphabet.length !== 26 || !input) { // Check it see if alphabet if actual length of the alphabet
         return false;
+    } 
 
-    } else { // Here we'll compare letters to see if we have any duplicates
-        for (let letter in alphabet) {
-            if (alphabet.slice(letter + 1).includes(alphabet[letter])) {
-                return false;
-            }
-        }
-    }
+     // Checks for duplicate letters
+     const duplicateCheckArray = [];
+     for (const letter of alphabet) {
+         if (duplicateCheckArray.indexOf(letter) < 0) {
+            duplicateCheckArray.push(letter);
+         } else {
+             return false;
+         }
+     }
+
     let returnString = '';
     const inArray = [...input]; // Spread our input into an array
     if (encode) {

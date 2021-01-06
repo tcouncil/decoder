@@ -27,8 +27,12 @@ describe("substitution", () => {
         const actual = substitution('thinkful', 'abcabcabcabcabcabcabcabcyz');
         expect(actual).to.be.false;
     });
-    it('Should return false if input or alphabet is missing', () => {
-        const actual = substitution("", "");
+    it('Should return false if input is missing', () => {
+        const actual = substitution("", "xoyqmcgrukswaflnthdjpzibev");
+        expect(actual).to.be.false;
+    });
+    it('Should return false if alphabet is missing', () => {
+        const actual = substitution("xoyqmcgrukswaflnthdjpzibev");
         expect(actual).to.be.false;
     });
 })
