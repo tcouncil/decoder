@@ -1,15 +1,9 @@
-// Global Variable Declartions
-const LOWER_CHAR = 97;
-const HIGHER_CHAR = 122;
-const ALPHABET = 26;
-const SPACE_CHAR = 32;
-
-const letterPos = (char) => char.toLowerCase().charCodeAt(0); // Changes charactor to lowercase and converts it into it's key code 
+const letterPos = (char) => char.charCodeAt(0); // Changes charactor to lowercase and converts it into it's key code 
 
 const letterGetter = (char) => String.fromCharCode(letterPos(char)); // Converts charactor to string based on it's key code 
 
 function encoder(letter) {
-    const alphabetPos = letterPos(letter) - HIGHER_CHAR + ALPHABET;
+    const alphabetPos = letterPos(letter) -  'z'.charCodeAt(0) + 26; // Get's the position in the alphabet ranging from 1-26
 
     // Row Position
     const rowPos = Math.ceil(alphabetPos / 5);
@@ -27,7 +21,6 @@ function encoder(letter) {
     }
     return `${colPos !== 0 ? colPos : 5}${colPos !== 0 ? rowPos : (rowPos - 1)}`;
 }
-
 function decoder(column, row) {
     let alphabetPos = (5 * (row - 1)) + column;
     row === 1 ? alphabetPos -= 1 : row === 2 ? alphabetPos -= 1 : alphabetPos;
@@ -38,12 +31,13 @@ function decoder(column, row) {
         case 9: // Handler for K
             return 'k';
     }
-    return String.fromCharCode(alphabetPos + LOWER_CHAR);
+    return String.fromCharCode(alphabetPos +  'a'.charCodeAt(0));
 }
-
 function polybius(input, encode = true) {
     if(input === '' || !input)
         return false;
+    else
+        input = input.toLowerCase();
         
     if (!encode) {
         const spaceArray = [...input];
@@ -53,8 +47,8 @@ function polybius(input, encode = true) {
     let returnString = '';
     if (encode) {
         for (const char of input) { // Converts our letters into numbers
-            if (letterPos(char) >= LOWER_CHAR && letterPos(char) <= HIGHER_CHAR || letterPos(char) === SPACE_CHAR) {
-                letterPos(char) === SPACE_CHAR ? returnString += ' ' : returnString += encoder(letterGetter(char));
+            if (letterPos(char) >=  'a'.charCodeAt(0) && letterPos(char) <=  'z'.charCodeAt(0) || letterPos(char) ===  ' '.charCodeAt(0)) {
+                letterPos(char) ===  ' '.charCodeAt(0) ? returnString += ' ' : returnString += encoder(letterGetter(char));
             }
         }
     } else {
